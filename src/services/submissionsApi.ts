@@ -1,6 +1,6 @@
 import { apiClient } from '@/lib/apiClient';
 import { ApiSuccessResponse } from '@/types/response';
-import { SubmissionDetail, SubmissionFilters, SubmissionsListResponse } from '@/types/submission';
+import { SubmissionDetail, SubmissionFilters, SubmissionsListResponse, VslManualCallState } from '@/types/submission';
 
 // The backend treats a missing filter as "all"/empty, so only the filters the user actually set are sent.
 // It also ignores a search shorter than 2 characters, so those are not sent either.
@@ -35,6 +35,30 @@ export async function getSubmissionsApi(filters: SubmissionFilters): Promise<Sub
 export async function getSubmissionDetailApi(submissionId: string): Promise<SubmissionDetail> {
     const response = await apiClient.get<ApiSuccessResponse<SubmissionDetail>>(
         `/admin/submissions/${encodeURIComponent(submissionId)}`,
+    );
+
+    return response.data.data;
+}
+
+// GET /admin/submissions/:publicId/vsl/manual-call
+// Fetches the current VSL manual-call window state.
+export async function getVslManualCallStateApi(
+    submissionId: string,
+): Promise<VslManualCallState> {
+    const response = await apiClient.get<ApiSuccessResponse<VslManualCallState>>(
+        `/admin/submissions/${encodeURIComponent(submissionId)}/vsl/manual-call`,
+    );
+
+    return response.data.data;
+}
+
+// POST /admin/submissions/:publicId/vsl/mark-call-done
+// Marks the manual call as done and stops the VSL sequence.
+export async function markVslCallDoneApi(
+    submissionId: string,
+): Promise<VslManualCallState> {
+    const response = await apiClient.post<ApiSuccessResponse<VslManualCallState>>(
+        `/admin/submissions/${encodeURIComponent(submissionId)}/vsl/mark-call-done`,
     );
 
     return response.data.data;

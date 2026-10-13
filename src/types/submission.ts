@@ -111,3 +111,29 @@ export type SubmissionDetail = SubmissionListItem & {
     // Set when part of the page could not be filled in, e.g. ['booking-service unavailable'].
     warnings?: string[];
 };
+
+
+export const VslManualCallStatus = {
+    NOT_ENROLLED: 'not_enrolled',
+    UPCOMING: 'upcoming',
+    OPEN: 'open',
+    EXPIRED: 'expired',
+    CALL_DONE: 'call_done',
+    COMPLETED: 'completed',
+    STOPPED: 'stopped',
+    INELIGIBLE: 'ineligible',
+} as const;
+
+export type VslManualCallStatus =
+    (typeof VslManualCallStatus)[keyof typeof VslManualCallStatus];
+
+
+export type VslManualCallState = {
+  status: VslManualCallStatus;
+  runStatus: 'active' | 'completed' | 'stopped' | null;
+  callWindowStartsAt: string | null;
+  callWindowEndsAt: string | null;
+  callMarkedDoneAt: string | null;
+  stopReason: string | null;
+  canMarkCallDone: boolean;
+};

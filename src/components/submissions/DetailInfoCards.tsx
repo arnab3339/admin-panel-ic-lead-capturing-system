@@ -7,6 +7,7 @@ import { BOOKING_STATUS_META } from '@/constants/adminStatus';
 import { SubmissionDetail } from '@/types/submission';
 import { formatDayTime, formatSlot, formatUntil } from '@/utils/helpers/dateFormat';
 import { getNotificationLabel, getSendStatusMeta } from '@/utils/helpers/notifications';
+import VslManualCallAction from './VslManualCallAction';
 
 const CardTitle: FC<{ children: ReactNode }> = ({ children }) => (
   <h2 className="mb-3 text-[13px] font-black uppercase tracking-[0.4px] text-(--builder-muted)">{children}</h2>
@@ -23,9 +24,11 @@ const InfoList: FC<{ rows: { label: string; value: ReactNode }[] }> = ({ rows })
   </dl>
 );
 
+
 export const CandidateCard: FC<{ detail: SubmissionDetail }> = ({ detail }) => (
   <Card className="p-5.5">
     <CardTitle>Candidate</CardTitle>
+
     <InfoList
       rows={[
         { label: 'Email', value: detail.candidate.email },
@@ -33,8 +36,11 @@ export const CandidateCard: FC<{ detail: SubmissionDetail }> = ({ detail }) => (
         { label: 'First seen', value: formatDayTime(detail.candidateFirstSeenAt) },
       ]}
     />
+
+    <VslManualCallAction submissionId={detail.publicId} />
   </Card>
 );
+
 
 export const BookingCard: FC<{ detail: SubmissionDetail }> = ({ detail }) => {
   const booking = detail.bookingDetails;

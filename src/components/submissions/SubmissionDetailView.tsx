@@ -122,7 +122,7 @@ const SubmissionDetailView: FC<SubmissionDetailViewProps> = ({ submissionId }) =
       </div>
 
       <SubmissionTimeline events={detail.timeline} />
-
+      
       <div className="flex flex-wrap items-start gap-5">
         <aside className="flex min-w-0 max-w-full flex-[1_1_340px] flex-col gap-5">
           <LeadScoreCard
